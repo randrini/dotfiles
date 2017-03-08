@@ -13,8 +13,13 @@ colors
 # Alias  neovim
 alias v='nvim'
 
+# Default editor
+  export EDITOR="nvim"
+  export USE_EDITOR=$EDITOR
+  export VISUAL=$EDITOR
+
 # Autorun Tmux
-if [ "$TMUX" = "" ]; then tmux; fi
+  if [ "$TMUX" = "" ]; then tmux; fi
 
 # Auto cd
 setopt auto_cd
