@@ -15,7 +15,7 @@ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 sudo pip3 install neovim
 
 #Set ZSH as default shell
-chsh -s =zsh
+chsh -s $(which zsh)
 
 #Set configs
 rm -rf ~/.vim ~/.vimrc ~/.zshrc ~/.tmux ~/.tmux.conf ~/.config/nvim 2> /dev/null
