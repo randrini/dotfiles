@@ -8,14 +8,14 @@ sudo pacman --needed --noconfirm -S zsh tmux the_silver_searcher terminator neov
 yaourt --needed --noconfirm -S fira-code-git
 
 # Vim-plug for Neovim
-# curl -fLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs \
-# https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+curl -fLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs \
+https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 
 # Install Neovim for python
 sudo pip3 install neovim
 
 #Set ZSH as default shell
-sudo chsh -s $(which zsh)
+chsh -s =zsh
 
 #Set configs
 rm -rf ~/.vim ~/.vimrc ~/.zshrc ~/.tmux ~/.tmux.conf ~/.config/nvim 2> /dev/null

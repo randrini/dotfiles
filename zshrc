@@ -1,3 +1,5 @@
+
+
 #
 # User configuration sourced by interactive shells
 #
@@ -6,6 +8,12 @@
 if [[ -s ${ZDOTDIR:-${HOME}}/.zim/init.zsh ]]; then
   source ${ZDOTDIR:-${HOME}}/.zim/init.zsh
 fi
+
+
+
+
+
+
 
 autoload colors zsh/terminfo
 colors

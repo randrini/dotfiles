@@ -101,7 +101,7 @@ Plug 'mbbill/undotree'                                  " undo history tree
 Plug 'Yggdroot/indentLine'                              " indent columns
 Plug 'tpope/vim-surround'                               " better brackets
 Plug 'scrooloose/syntastic'                             " check syntax
-Plug 'w0rp/ale'
+"Plug 'w0rp/ale'
 Plug 'sheerun/vim-polyglot'
 Plug 'scrooloose/nerdcommenter'
 " using deoplete - Plug 'valloric/youcompleteme'
