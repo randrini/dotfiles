@@ -9,5 +9,5 @@ for template_file ( ${ZDOTDIR:-${HOME}}/.zim/templates/* ); do
   ( print -rn "$(<${template_file})$(<${user_file})" >! ${user_file} ) 2>/dev/null
 done
 
-chsh -s =zsh
+# chsh -s =zsh
 source ${ZDOTDIR:-${HOME}}/.zlogin

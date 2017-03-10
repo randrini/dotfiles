@@ -5,9 +5,8 @@ bash init.sh
 
 zsh zim_init.sh
 
-log out log in
-
 open nvim => :PlugInstall
 
-for tmux C-a + I
+log out log in
 
+for tmux C-a + I
