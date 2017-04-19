@@ -9,6 +9,15 @@ if [[ -s ${ZDOTDIR:-${HOME}}/.zim/init.zsh ]]; then
   source ${ZDOTDIR:-${HOME}}/.zim/init.zsh
 fi
 
+#
+# User configuration sourced by interactive shells
+#
+
+# Source zim
+if [[ -s ${ZDOTDIR:-${HOME}}/.zim/init.zsh ]]; then
+  source ${ZDOTDIR:-${HOME}}/.zim/init.zsh
+fi
+
 
 
 
@@ -21,7 +30,11 @@ autoload -Uz promptinit
 promptinit
 prompt steeef
 
-export TERM=xterm-256color
+if [ -e /usr/share/terminfo/x/xterm-256color ]; then
+        export TERM='xterm-256color'
+else
+        export TERM='xterm-color'
+fi
 
 # Alias  neovim
 alias v='nvim'

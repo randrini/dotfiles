@@ -1,10 +1,12 @@
-  let mapleader =  " " " Changing default master key
-
+  let mapleader =  " " " Changing default master key to space
+        
   set encoding=utf8
 
 " 256 color
   if !has('gui_running')
     set t_Co=256
+    set t_AB=^[[48;5;%dm
+    set t_AF=^[[38;5;%dm
   endif
 
   set nomodeline
@@ -17,21 +19,25 @@
 " Use system clipboard
   set clipboard=unnamed
 " Set tab width and convert tabs to spaces
-  set tabstop=4
-  set softtabstop=4
-  set shiftwidth=4
+  set tabstop=2
+  set softtabstop=0
+  set shiftwidth=2
   set expandtab
   set smartindent
-
+  autocmd Filetype vimrc setlocal ts=2 sw=2 "expandtab
+                  
 " Don't let Vim hide characters or make loud dings
   set conceallevel=1
   set noerrorbells
+
 " Number gutter
   set number
   set numberwidth=5
+  
 " Space above/beside cursor from screen edges
   set scrolloff=1
   set sidescrolloff=5
+
 " Remaping Esc to jj
   inoremap jj <ESC>
 " Nerd Commenter
@@ -41,7 +47,7 @@
   set smartcase
 
   set autoindent        " indent
-  set showmatch         " highlight matching brackets
+  " set showmatch         " highlight matching brackets
   set autoread          " when file was changed
   set lazyredraw        " redraw only when we need to"
   set hlsearch          " highlight same words while searching with Shift + *
@@ -51,16 +57,16 @@
   set ttimeoutlen=1
 
 " automatically refresh changed files
-set autoread
+  set autoread
 
 " make line number brighter
-hi LineNr ctermfg=240 guifg=#585858
+  hi LineNr ctermfg=240 guifg=#ff0000
 
 " wrap long lines
-nnoremap wl gggqG
+  nnoremap wl gggqG
 
 " redraw vim
-nnoremap rr :so $MYVIMRC \| checktime<CR>
+  nnoremap rr :so $MYVIMRC \| checktime<CR>
 
 " Better Vim buffer/split navigation
   nnoremap <C-j> <C-w>j
@@ -69,50 +75,50 @@ nnoremap rr :so $MYVIMRC \| checktime<CR>
   nnoremap <C-l> <C-w>l
 
 " highlight last inserted text
-nnoremap gV `[v`]
+  nnoremap gV `[v`]
 
 " use The Silver Searcher https://github.com/ggreer/the_silver_searcher
-if executable('ag')
-  " use Ag over Grep
-  set grepprg=ag\ --nogroup\ --nocolor
-endif
+  if executable('ag')
+    " use Ag over Grep
+    set grepprg=ag\ --nogroup\ --nocolor
+  endif
 
 "=========== Plugin Manager ==========
 
 call plug#begin('~/.local/share/nvim/plugged')
 
 " Important?
-Plug 'Shougo/unite.vim'
+  Plug 'Shougo/unite.vim'
 
 " Visual
-Plug 'dracula/vim'
+  Plug 'chriskempson/base16-vim'
 " Plug 'vim-airline/vim-airline'
 " Plug 'vim-airline/vim-airline-themes'
-
-Plug 'itchyny/lightline.vim'
+  Plug 'itchyny/lightline.vim'
 
 " Project - Navigation - Files
-Plug 'ctrlpvim/ctrlp.vim', { 'on': 'CtrlP' }
-Plug 'mhinz/vim-grepper'
-Plug 'Shougo/vimfiler.vim', { 'on': 'VimFiler' }
-Plug 'scrooloose/nerdtree'
+  Plug 'ctrlpvim/ctrlp.vim', { 'on': 'CtrlP' }
+  Plug 'mhinz/vim-grepper'
+  Plug 'Shougo/vimfiler.vim', { 'on': 'VimFiler' }
+  Plug 'scrooloose/nerdtree'
 
 " Code help
 
-Plug 'Valloric/YouCompleteMe'
-Plug 'tpope/vim-repeat'                                 " repeat more commands with '.'
-Plug 'terryma/vim-multiple-cursors'                     " multiple cursors like in ST
+  " Plug 'Valloric/YouCompleteMe'
+  Plug 'tpope/vim-repeat'                                 " repeat more commands with '.'
+  Plug 'terryma/vim-multiple-cursors'                     " multiple cursors like in ST
 
 " Plug 'Shougo/deoplete.nvim', { 'on': [], 'do': ':UpdateRemotePlugins', 'tag': 'e28d519' } " autocomplete, use e28d519 because of https://github.com/Shougo/deoplete.nvim/issues/291
 " Plug 'zchee/deoplete-clang'
-Plug 'Raimondi/delimitMate', { 'on': [] }               " closing brackets Plug 'terryma/vim-expand-region'                        " change visual selection by using '+' / '-'
-Plug 'mbbill/undotree'                                  " undo history tree
-Plug 'Yggdroot/indentLine'                              " indent columns
-Plug 'tpope/vim-surround'                               " better brackets
-Plug 'scrooloose/syntastic'                             " check syntax
+  Plug 'Raimondi/delimitMate', { 'on': [] }               " closing brackets
+  Plug 'terryma/vim-expand-region'                        " change visual selection by using '+' / '-'
+  Plug 'mbbill/undotree'                                  " undo history tree
+  Plug 'Yggdroot/indentLine'                              " indent columns
+  Plug 'tpope/vim-surround'                               " better brackets
+  Plug 'scrooloose/syntastic'                             " check syntax
 "Plug 'w0rp/ale'
-Plug 'sheerun/vim-polyglot'
-Plug 'scrooloose/nerdcommenter'
+  Plug 'sheerun/vim-polyglot'
+  Plug 'scrooloose/nerdcommenter'
 " using deoplete - Plug 'valloric/youcompleteme'
 
 " Movement
@@ -154,6 +160,11 @@ let $NVIM_TUI_ENABLE_CURSOR_SHAPE=1
   imap <down> <nop>
   imap <left> <nop>
   imap <right> <nop>
+
+
+  
+
+colorscheme base16-harmonic-dark
 
 "=========== indentLine settings =========
   let g:indentLine_enabled = 1

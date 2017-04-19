@@ -3,7 +3,7 @@ This is my experimental dotfiles.
 
 bash init.sh
 
-zsh zim_init.sh
+sudo zsh zim_init.sh
 
 open nvim => :PlugInstall
 
