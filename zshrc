@@ -25,7 +25,6 @@ fi
 
 #autoload colors zsh/terminfo
 #colors
-
 autoload -Uz promptinit
 promptinit
 prompt steeef
@@ -37,7 +36,7 @@ else
 fi
 
 # Alias  neovim
-alias v='nvim'
+  alias v='nvim'
 
 # Default editor
   export EDITOR="nvim"
@@ -48,11 +47,11 @@ alias v='nvim'
   if [ "$TMUX" = "" ]; then tmux; fi
 
 # Auto cd
-setopt auto_cd
+  setopt auto_cd
 
 #Spellcheck
-setopt correctall
-alias git status='nocorrect git status'
+  setopt correctall
+  alias git status='nocorrect git status'
 
 # c-h BS hack for vim
 # infocmp $TERM | sed 's/kbs=^[hH]/kbs=\\177/' > $TERM.ti

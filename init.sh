@@ -21,11 +21,13 @@
 #Set configs
   rm -rf ~/.vim ~/.vimrc ~/.zshrc ~/.tmux ~/.tmux.conf ~/.config/nvim 2> /dev/null
   rm -f ~/.local/share/xfce4/terminal/colorschemes/base16-harmonic16-dark.16.theme 2> /dev/null
-  mkdir -p ~/.config ~/.config/nvim 
+  rm -rf ~/.config/rofi
+  mkdir -p ~/.config ~/.config/nvim  # ~/.config/rofi/
 
 # Sym link dots
   ln -s ~/dotfiles/zshrc ~/.zshrc
   ln -s ~/dotfiles/tmux.conf ~/.tmux.conf
   ln -s ~/dotfiles/vimrc ~/.config/nvim/init.vim
   ln -s ~/dotfiles/vimscheme/base16-harmonic16-dark.16.theme ~/.local/share/xfce4/terminal/colorschemes/harmonic.theme
+#  ln -s ~/dotfiles/rofic ~/.config/rofi/config
 #----------------------- END OF Preconfig ----------------------------

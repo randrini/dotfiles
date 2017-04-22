@@ -1,5 +1,7 @@
-  let mapleader =  " " " Changing default master key to space
-        
+  set  nocompatible
+  syntax on
+  let mapleader =  " "        " Changing default master key to space
+  filetype plugin indent on   "Needed  for  Nerd Commenter as well
   set encoding=utf8
 
 " 256 color
@@ -10,21 +12,25 @@
   endif
 
   set nomodeline
-
+  set cursorline
   set nowrap
-"Except ... on  Markdown. Good stuff?
-	autocmd FileType markdown setlocal warp
+  set wildmenu
+  set wildmode=longest:full,full
+
+" Except ... on  Markdown. Good stuff?
+	autocmd FileType markdown setlocal wrap
 " Adjust system undo levels
   set undolevels=100
 " Use system clipboard
   set clipboard=unnamed
 " Set tab width and convert tabs to spaces
   set tabstop=2
-  set softtabstop=0
+  set softtabstop=2
   set shiftwidth=2
   set expandtab
   set smartindent
   autocmd Filetype vimrc setlocal ts=2 sw=2 "expandtab
+  autocmd Filetype C setlocal  ts=3 sw=2
                   
 " Don't let Vim hide characters or make loud dings
   set conceallevel=1
@@ -32,16 +38,14 @@
 
 " Number gutter
   set number
-  set numberwidth=5
+  set numberwidth=2
   
 " Space above/beside cursor from screen edges
-  set scrolloff=1
+  set scrolloff=5
   set sidescrolloff=5
 
 " Remaping Esc to jj
   inoremap jj <ESC>
-" Nerd Commenter
-  filetype plugin on
 
   set ignorecase
   set smartcase
@@ -59,32 +63,26 @@
 " automatically refresh changed files
   set autoread
 
-" make line number brighter
-  hi LineNr ctermfg=240 guifg=#ff0000
-
 " wrap long lines
   nnoremap wl gggqG
 
 " redraw vim
   nnoremap rr :so $MYVIMRC \| checktime<CR>
 
-" Better Vim buffer/split navigation
-  nnoremap <C-j> <C-w>j
-  nnoremap <C-k> <C-w>k
-  nnoremap <C-h> <C-w>h
-  nnoremap <C-l> <C-w>l
-
 " highlight last inserted text
   nnoremap gV `[v`]
 
-" use The Silver Searcher https://github.com/ggreer/the_silver_searcher
-  if executable('ag')
-    " use Ag over Grep
-    set grepprg=ag\ --nogroup\ --nocolor
-  endif
+" Adding empty lines
+  nnoremap <Leader>[  :<c-u>put! =repeat(nr2char(10), v:count1)<cr>'[
+  nnoremap <Leader>]  :<c-u>put =repeat(nr2char(10), v:count1)<cr>
 
-"=========== Plugin Manager ==========
+" Moving current line
+  nnoremap <Leader>m[  :<c-u>execute 'move -1-'. v:count1<cr>
+  nnoremap <Leader>m]  :<c-u>execute 'move +'. v:count1<cr>
 
+
+"  ========================= Plugin Manager ========================= 
+"
 call plug#begin('~/.local/share/nvim/plugged')
 
 " Important?
@@ -101,51 +99,58 @@ call plug#begin('~/.local/share/nvim/plugged')
   Plug 'mhinz/vim-grepper'
   Plug 'Shougo/vimfiler.vim', { 'on': 'VimFiler' }
   Plug 'scrooloose/nerdtree'
+  Plug 'Xuyuanp/nerdtree-git-plugin'
+  Plug 'mileszs/ack.vim'
 
 " Code help
-
   " Plug 'Valloric/YouCompleteMe'
   Plug 'tpope/vim-repeat'                                 " repeat more commands with '.'
   Plug 'terryma/vim-multiple-cursors'                     " multiple cursors like in ST
 
-" Plug 'Shougo/deoplete.nvim', { 'on': [], 'do': ':UpdateRemotePlugins', 'tag': 'e28d519' } " autocomplete, use e28d519 because of https://github.com/Shougo/deoplete.nvim/issues/291
-" Plug 'zchee/deoplete-clang'
+  " Plug 'Shougo/deoplete.nvim', { 'on': [], 'do': ':UpdateRemotePlugins', 'tag': 'e28d519' } " autocomplete, use e28d519 because of https://github.com/Shougo/deoplete.nvim/issues/291
+  " Plug 'zchee/deoplete-clang'
+
   Plug 'Raimondi/delimitMate', { 'on': [] }               " closing brackets
   Plug 'terryma/vim-expand-region'                        " change visual selection by using '+' / '-'
   Plug 'mbbill/undotree'                                  " undo history tree
   Plug 'Yggdroot/indentLine'                              " indent columns
   Plug 'tpope/vim-surround'                               " better brackets
   Plug 'scrooloose/syntastic'                             " check syntax
-"Plug 'w0rp/ale'
+  Plug 'matze/vim-move'
+
+  "Plug 'w0rp/ale'
   Plug 'sheerun/vim-polyglot'
   Plug 'scrooloose/nerdcommenter'
-" using deoplete - Plug 'valloric/youcompleteme'
+  " Plug 'valloric/youcompleteme' For later  use
 
 " Movement
-Plug 'justinmk/vim-sneak'
+  Plug 'justinmk/vim-sneak'
+  Plug 'easymotion/vim-easymotion'
+  Plug 'yuttie/comfortable-motion.vim'
 
 " Tmux
-Plug 'christoomey/vim-tmux-navigator'
-Plug 'tmux-plugins/vim-tmux'
+  Plug 'christoomey/vim-tmux-navigator'
+  Plug 'tmux-plugins/vim-tmux'
+  Plug 'tmux-plugins/vim-tmux-focus-events'
+
 " git
-Plug 'tpope/vim-fugitive'                               " git commands
-Plug 'airblade/vim-gitgutter'                           " git gutter
+  Plug 'tpope/vim-fugitive'                               " git commands
+  Plug 'airblade/vim-gitgutter'                           " git gutter
 
 call plug#end()
 
+"  ========================= Configuration ========================= 
+"
+" Unite
+  let g:unite_force_overwrite_statusline = 0
+  let g:vimfiler_force_overwrite_statusline = 0
+  let g:vimshell_force_overwrite_statusline = 0
+  
 " Disable mouse support
-set mouse=r
-let $NVIM_TUI_ENABLE_CURSOR_SHAPE=1
-
-
-"=========== Dealing with Buffers/Tab ==============
-
-" Return the last file opened : 
-" SPACE SPACE to open  previously opened file buffer
-  nmap <Leader><Leader> <c-^>
+  set mouse=r
+  let $NVIM_TUI_ENABLE_CURSOR_SHAPE=1
 
 " Next/Previous Buffer/Tab
-"TAB next buffer, SHIFT TAB previous
   nnoremap <Tab> :bnext!<CR> 
   nnoremap <S-Tab> :bprev!<CR><Paste>
 
@@ -155,22 +160,40 @@ let $NVIM_TUI_ENABLE_CURSOR_SHAPE=1
   nnoremap <Up> :resize -1<CR>
   nnoremap <Down> :resize +1<CR>
 
-"Disable arrow keys completely in Insert Mode
+" Disable arrow keys completely in Insert Mode
   imap <up> <nop>
   imap <down> <nop>
   imap <left> <nop>
   imap <right> <nop>
 
+" Set  ENTER to go new line without insert!
+  nnoremap <cr> o<esc>
 
-  
+" Reload vim config /// github.com/ismay
+  nnoremap <leader>r :source $MYVIMRC<CR>
 
-colorscheme base16-harmonic-dark
+" Clear search
+  nnoremap <leader>c :let @/ = ""<CR>
 
-"=========== indentLine settings =========
+" Select all
+  nnoremap <leader>a ggVG<CR>
+
+" Copy all
+  nnoremap <leader>y ggVGy<CR>
+
+" Colorscheme
+  colorscheme base16-harmonic-dark
+
+" Indent  line
   let g:indentLine_enabled = 1
   "let g:indentLine_char = "⟩"
+  
+" What  is this code below? 
+  set laststatus=2
+  set noshowmode " remove extra default info from nvim
 
-"=========== airline settings =========
+
+"  ========================= Lightline ========================= 
 "let g:airline#extensions#tabline#enabled=1
 "let g:airline_powrline_fonts=1
 "
@@ -178,7 +201,6 @@ colorscheme base16-harmonic-dark
 "      \ 'colorscheme': 'powerline',
 "      \ }
 "
-"  Lightline conf from main source
 let g:lightline = {
       \ 'colorscheme': 'powerline',
       \ 'active': {
@@ -304,38 +326,44 @@ function! s:syntastic()
   call lightline#update()
 endfunction
 
-let g:unite_force_overwrite_statusline = 0
-let g:vimfiler_force_overwrite_statusline = 0
-let g:vimshell_force_overwrite_statusline = 0
-
-set laststatus=2
-set noshowmode " remove extra default info from nvim
-
-" adding empty lines
-nnoremap <Leader>[  :<c-u>put! =repeat(nr2char(10), v:count1)<cr>'[
-nnoremap <Leader>]  :<c-u>put =repeat(nr2char(10), v:count1)<cr>
-" moving current line
-nnoremap <Leader>m[  :<c-u>execute 'move -1-'. v:count1<cr>
-nnoremap <Leader>m]  :<c-u>execute 'move +'. v:count1<cr>
-
-" ----------------------------------- CtrlP --------------------------------
-" SPACE t or SPACE p opens Fuzzy Finder
+" " --- CtrlP -----------------------------
+"
   nnoremap <Leader>p :CtrlP<CR>
   nnoremap <Leader>t :CtrlP<CR>
 
-" -------------------- vim-grepper -----------------------------------
-" SPACE f p to  type a search to find matches in entire
-" project; SPACE f b in current buffers
-nnoremap <Leader>fp :Grepper<Space>-query<Space>
-nnoremap <Leader>fb :Grepper<Space>-buffers<Space>-query<Space>-<Space>
+" use The Silver Searcher https://github.com/ggreer/the_silver_searcher
+  "if executable('ag')
+    " use Ag over Grep
+    " set grepprg=ag\ --nogroup\ --nocolor
+    " let g:ackprg = 'ag --nogroup --nocolor --column'
+  "  let g:ackprg = 'ag --vimgrep'
+  "endif
+  
+" --- Ag/Ack/Grep -----------------------
+  if executable('ag')
+    " use ag over grep
+    set grepprg=ag\ --nogroup\ --nocolor
 
-" ---------------------- VimFiler  ----------------------------------
+    " define Ag command
+    command! -nargs=+ -complete=file -bar Ag silent! grep! <args>|cwindow|redraw!
+
+    " bind \ to grep shortcut
+    nnoremap \ :Ag<SPACE>
+  endif
+
+" --- VimGrepper ------------------------
+"
+" Find match in enter project and in current buffers
+  nnoremap <Leader>fp :Grepper<Space>-query<Space>
+  nnoremap <Leader>fb :Grepper<Space>-buffers<Space>-query<Space>-<Space>
+
+" --- VimFiler 00------------------------
 " SPACE backtick to toggle
 " SPACE ~ to open file tree from current buffer's dir
-map ` :VimFiler -explorer<CR>
-map ~ :VimFilerCurrentDir -explorer -find<CR>
+  map ` :VimFiler -explorer<CR>
+  map ~ :VimFilerCurrentDir -explorer -find<CR>
 
-" ------------------------------  Deoplete ---------------------------------
+" --- Deoplete --------------------------
 " let g:deoplete#enable_at_startup = 1
 
 " Clang path for deoplete
@@ -343,18 +371,52 @@ map ~ :VimFilerCurrentDir -explorer -find<CR>
 "    let g:deoplete#sources#clang#clang_header = '/usr/lib/clang'
 "    let g:deoplete#sources#clang#std = 'c11'
 
-" set wildmenu
-syntax enable
-
-
 " deoplete tab-complete
-inoremap <expr><tab> pumvisible() ? "\<c-n>" : "\<tab>"
+" inoremap <expr><tab> pumvisible() ? "\<c-n>" : "\<tab>"
 
-"==== vim-sneak effcient moving ===
-let g:sneak#s_next = 1
-nmap f <Plug>Sneak_f
-nmap F <Plug>Sneak_F
-xmap f <Plug>Sneak_f
-xmap F <Plug>Sneak_F
-omap f <Plug>Sneak_f
-omap F <Plug>Sneak_F
+" --- Vim-sneak -------------------------
+"
+  let g:sneak#s_next = 1
+  nmap f <Plug>Sneak_f
+  nmap F <Plug>Sneak_F
+  xmap f <Plug>Sneak_f
+  xmap F <Plug>Sneak_F
+  omap f <Plug>Sneak_f
+  omap F <Plug>Sneak_F
+
+" --- Vim  easymotion -------------------
+"
+  let g:EasyMotion_smartcase = 1
+  let g:EasyMotion_keys='qwertyuiopasdfghjklzxcvbnm'
+  map <leader> <Plug>(easymotion-prefix)
+
+" --- Nerdtree --------------------------
+"
+  let NERDTreeMapActivateNode='l'
+  let NERDTreeMapCloseDir='h'
+  let NERDTreeMapOpenSplit='<c-s>'
+  let NERDTreeMapOpenVSplit='<c-v>'
+  let NERDTreeMinimalUI = 1
+  let NERDTreeAutoDeleteBuffer = 1
+  nnoremap <leader>n :NERDTreeToggle<CR>
+
+" --- Ale -------------------------------
+"
+  let g:ale_sign_error = '>>'
+  let g:ale_sign_warning = '--'
+  let g:ale_sign_column_always = 1
+  let g:ale_statusline_format = ['⨉ %d', '⚠ %d', '⬥ ok']
+
+" --- Comfortable motion ----------------
+"
+  let g:comfortable_motion_scroll_down_key = "j"
+  let g:comfortable_motion_scroll_up_key = "k" 
+
+" --- Gitgutter -------------------------
+"
+  let g:gitgutter_sign_column_always = 1
+  let g:gitgutter_sign_added = '++'
+  let g:gitgutter_sign_modified = '~~'
+  let g:gitgutter_sign_removed = '__'
+  let g:gitgutter_sign_removed_first_line = '¯¯'
+  let g:gitgutter_sign_modified_removed = '~_'
