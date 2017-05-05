@@ -1,21 +1,31 @@
   set  nocompatible
   syntax on
   let mapleader =  " "        " Changing default master key to space
-  filetype plugin indent on   "Needed  for  Nerd Commenter as well
+  filetype plugin indent on   " Needed  for  Nerd Commenter as well
   set encoding=utf8
 
+  set clipboard=unnamedplus
+  map <C-c> "+y<CR>           " CTRL+C   to copy in Vmode
+  
 " 256 color
-  if !has('gui_running')
-    set t_Co=256
-    set t_AB=^[[48;5;%dm
-    set t_AF=^[[38;5;%dm
-  endif
+  "if !has('gui_running')
+    "set t_Co=256
+    " set t_AB=^[[48;5;%dm
+    " set t_AF=^[[38;5;%dm
+  "endif 
+
+  let $NVIM_TUI_ENABLE_TRUE_COLOR=1
+  set termguicolors
+  colorscheme one 
+  set background=dark
+  let g:airline_theme='one'
 
   set nomodeline
   set cursorline
   set nowrap
   set wildmenu
   set wildmode=longest:full,full
+  set colorcolumn=80
 
 " Except ... on  Markdown. Good stuff?
 	autocmd FileType markdown setlocal wrap
@@ -29,8 +39,8 @@
   set shiftwidth=2
   set expandtab
   set smartindent
-  autocmd Filetype vimrc setlocal ts=2 sw=2 "expandtab
-  autocmd Filetype C setlocal  ts=3 sw=2
+  "autocmd Filetype vimrc setlocal ts=2 sw=2 "expandtab
+  "autocmd Filetype C setlocal  ts=3 sw=2
                   
 " Don't let Vim hide characters or make loud dings
   set conceallevel=1
@@ -55,21 +65,23 @@
   set autoread          " when file was changed
   set lazyredraw        " redraw only when we need to"
   set hlsearch          " highlight same words while searching with Shift + *
+  "Ability to cancel a search with Escape (marcgg.com)
+  nnoremap <silent> <Esc> :nohlsearch<Bar>:echo<CR>
 
-" removes the delay when hitting esc in insert mode
+" Removes the delay when hitting esc in insert mode
   set ttimeout
   set ttimeoutlen=1
 
-" automatically refresh changed files
+" Automatically refresh changed files
   set autoread
 
-" wrap long lines
+" Wrap long lines
   nnoremap wl gggqG
 
-" redraw vim
+" Redraw vim
   nnoremap rr :so $MYVIMRC \| checktime<CR>
 
-" highlight last inserted text
+" Highlight last inserted text
   nnoremap gV `[v`]
 
 " Adding empty lines
@@ -83,16 +95,17 @@
 
 "  ========================= Plugin Manager ========================= 
 "
-call plug#begin('~/.local/share/nvim/plugged')
+call plug#begin('~/.config/nvim/plugged')
 
 " Important?
   Plug 'Shougo/unite.vim'
 
 " Visual
   Plug 'chriskempson/base16-vim'
-" Plug 'vim-airline/vim-airline'
-" Plug 'vim-airline/vim-airline-themes'
-  Plug 'itchyny/lightline.vim'
+  Plug 'vim-airline/vim-airline'
+  Plug 'vim-airline/vim-airline-themes'
+" Plug 'itchyny/lightline.vim'
+  Plug 'rakr/vim-one'
 
 " Project - Navigation - Files
   Plug 'ctrlpvim/ctrlp.vim', { 'on': 'CtrlP' }
@@ -117,11 +130,16 @@ call plug#begin('~/.local/share/nvim/plugged')
   Plug 'tpope/vim-surround'                               " better brackets
   Plug 'scrooloose/syntastic'                             " check syntax
   Plug 'matze/vim-move'
+  Plug 'majutsushi/tagbar'
 
   "Plug 'w0rp/ale'
   Plug 'sheerun/vim-polyglot'
   Plug 'scrooloose/nerdcommenter'
-  " Plug 'valloric/youcompleteme' For later  use
+  Plug 'ervandew/supertab'
+  Plug 'valloric/youcompleteme'
+  Plug 'SirVer/ultisnips'
+  Plug 'honza/vim-snippets'
+  Plug 'ryanoasis/vim-devicons'
 
 " Movement
   Plug 'justinmk/vim-sneak'
@@ -182,7 +200,7 @@ call plug#end()
   nnoremap <leader>y ggVGy<CR>
 
 " Colorscheme
-  colorscheme base16-harmonic-dark
+  "colorscheme base16-harmonic-dark
 
 " Indent  line
   let g:indentLine_enabled = 1
@@ -191,140 +209,6 @@ call plug#end()
 " What  is this code below? 
   set laststatus=2
   set noshowmode " remove extra default info from nvim
-
-
-"  ========================= Lightline ========================= 
-"let g:airline#extensions#tabline#enabled=1
-"let g:airline_powrline_fonts=1
-"
-"let g:lightline = {
-"      \ 'colorscheme': 'powerline',
-"      \ }
-"
-let g:lightline = {
-      \ 'colorscheme': 'powerline',
-      \ 'active': {
-      \   'left': [ [ 'mode', 'paste' ], [ 'fugitive', 'filename' ], ['ctrlpmark'] ],
-      \   'right': [ [ 'syntastic', 'lineinfo' ], ['percent'], [ 'fileformat', 'fileencoding', 'filetype' ] ]
-      \ },
-      \ 'component_function': {
-      \   'fugitive': 'LightlineFugitive',
-      \   'filename': 'LightlineFilename',
-      \   'fileformat': 'LightlineFileformat',
-      \   'filetype': 'LightlineFiletype',
-      \   'fileencoding': 'LightlineFileencoding',
-      \   'mode': 'LightlineMode',
-      \   'ctrlpmark': 'CtrlPMark',
-      \ },
-      \ 'component_expand': {
-      \   'syntastic': 'SyntasticStatuslineFlag',
-      \ },
-      \ 'component_type': {
-      \   'syntastic': 'error',
-      \ },
-      \ 'subseparator': { 'left': '|', 'right': '|' }
-      \ }
-
-function! LightlineModified()
-  return &ft =~ 'help' ? '' : &modified ? '+' : &modifiable ? '' : '-'
-endfunction
-
-function! LightlineReadonly()
-  return &ft !~? 'help' && &readonly ? 'RO' : ''
-endfunction
-
-function! LightlineFilename()
-  let fname = expand('%:t')
-  return fname == 'ControlP' && has_key(g:lightline, 'ctrlp_item') ? g:lightline.ctrlp_item :
-        \ fname == '__Tagbar__' ? g:lightline.fname :
-        \ fname =~ '__Gundo\|NERD_tree' ? '' :
-        \ &ft == 'vimfiler' ? vimfiler#get_status_string() :
-        \ &ft == 'unite' ? unite#get_status_string() :
-        \ &ft == 'vimshell' ? vimshell#get_status_string() :
-        \ ('' != LightlineReadonly() ? LightlineReadonly() . ' ' : '') .
-        \ ('' != fname ? fname : '[No Name]') .
-        \ ('' != LightlineModified() ? ' ' . LightlineModified() : '')
-endfunction
-
-function! LightlineFugitive()
-  try
-    if expand('%:t') !~? 'Tagbar\|Gundo\|NERD' && &ft !~? 'vimfiler' && exists('*fugitive#head')
-      let mark = ''  " edit here for cool mark
-      let branch = fugitive#head()
-      return branch !=# '' ? mark.branch : ''
-    endif
-  catch
-  endtry
-  return ''
-endfunction
-
-function! LightlineFileformat()
-  return winwidth(0) > 70 ? &fileformat : ''
-endfunction
-
-function! LightlineFiletype()
-  return winwidth(0) > 70 ? (&filetype !=# '' ? &filetype : 'no ft') : ''
-endfunction
-
-function! LightlineFileencoding()
-  return winwidth(0) > 70 ? (&fenc !=# '' ? &fenc : &enc) : ''
-endfunction
-
-function! LightlineMode()
-  let fname = expand('%:t')
-  return fname == '__Tagbar__' ? 'Tagbar' :
-        \ fname == 'ControlP' ? 'CtrlP' :
-        \ fname == '__Gundo__' ? 'Gundo' :
-        \ fname == '__Gundo_Preview__' ? 'Gundo Preview' :
-        \ fname =~ 'NERD_tree' ? 'NERDTree' :
-        \ &ft == 'unite' ? 'Unite' :
-        \ &ft == 'vimfiler' ? 'VimFiler' :
-        \ &ft == 'vimshell' ? 'VimShell' :
-        \ winwidth(0) > 60 ? lightline#mode() : ''
-endfunction
-
-function! CtrlPMark()
-  if expand('%:t') =~ 'ControlP' && has_key(g:lightline, 'ctrlp_item')
-    call lightline#link('iR'[g:lightline.ctrlp_regex])
-    return lightline#concatenate([g:lightline.ctrlp_prev, g:lightline.ctrlp_item
-          \ , g:lightline.ctrlp_next], 0)
-  else
-    return ''
-  endif
-endfunction
-
-let g:ctrlp_status_func = {
-  \ 'main': 'CtrlPStatusFunc_1',
-  \ 'prog': 'CtrlPStatusFunc_2',
-  \ }
-
-function! CtrlPStatusFunc_1(focus, byfname, regex, prev, item, next, marked)
-  let g:lightline.ctrlp_regex = a:regex
-  let g:lightline.ctrlp_prev = a:prev
-  let g:lightline.ctrlp_item = a:item
-  let g:lightline.ctrlp_next = a:next
-  return lightline#statusline(0)
-endfunction
-
-function! CtrlPStatusFunc_2(str)
-  return lightline#statusline(0)
-endfunction
-
-let g:tagbar_status_func = 'TagbarStatusFunc'
-
-function! TagbarStatusFunc(current, sort, fname, ...) abort
-    let g:lightline.fname = a:fname
-  return lightline#statusline(0)
-endfunction
-
-augroup AutoSyntastic
-  autocmd!
-  autocmd BufWritePost *.c,*.cpp call s:syntastic()
-augroup END
-function! s:syntastic()
-  SyntasticCheck
-  call lightline#update()
-endfunction
 
 " " --- CtrlP -----------------------------
 "
@@ -398,6 +282,7 @@ endfunction
   let NERDTreeMapOpenVSplit='<c-v>'
   let NERDTreeMinimalUI = 1
   let NERDTreeAutoDeleteBuffer = 1
+  let NERDTreeIgnore=['\.DS_Store', '\~$', '\.swp']
   nnoremap <leader>n :NERDTreeToggle<CR>
 
 " --- Ale -------------------------------
@@ -420,3 +305,28 @@ endfunction
   let g:gitgutter_sign_removed = '__'
   let g:gitgutter_sign_removed_first_line = '¯¯'
   let g:gitgutter_sign_modified_removed = '~_'
+
+" --- Tagbar ----------------------------
+"
+  nmap <leader>m :TagbarToggle<CR>
+
+" --- Airline ---------------------------
+"
+  let g:airline_theme='luna'
+  let g:airline#extensions#tabline#enabled = 1
+  let g:airline_powerline_fonts = 1
+
+" --- Ultisnip --------------------------
+"
+" If you want :UltiSnipsEdit to split your window.
+  let g:UltiSnipsEditSplit="vertical"
+
+" Make YCM compatible with UltiSnips (using supertab)
+  let g:ycm_key_list_select_completion = ['<C-j>', '<Down>']
+  let g:ycm_key_list_previous_completion = ['<C-k>', '<Up>']
+  let g:SuperTabDefaultCompletionType = '<C-j>'
+
+" Better key bindings for UltiSnipsExpandTrigger
+  let g:UltiSnipsExpandTrigger = "<tab>"
+  let g:UltiSnipsJumpForwardTrigger = "<tab>"
+  let g:UltiSnipsJumpBackwardTrigger = "<s-tab>"
