@@ -1,13 +1,9 @@
-  set  nocompatible
+  set encoding=utf-8
   syntax on
-  let mapleader =  " "        " Changing default master key to space
   filetype plugin indent on   " Needed  for  Nerd Commenter as well
-  set encoding=utf8
+  let mapleader = " "         " Changing default master key to space
 
-  set clipboard=unnamedplus
-  map <C-c> "+y<CR>           " CTRL+C   to copy in Vmode
-  
-" 256 color
+  "256 color
   "if !has('gui_running')
     "set t_Co=256
     " set t_AB=^[[48;5;%dm
@@ -16,9 +12,8 @@
 
   let $NVIM_TUI_ENABLE_TRUE_COLOR=1
   set termguicolors
-  colorscheme one 
   set background=dark
-  let g:airline_theme='one'
+  "let base16colorspace=256
 
   set nomodeline
   set cursorline
@@ -33,6 +28,8 @@
   set undolevels=100
 " Use system clipboard
   set clipboard=unnamed
+  "set clipboard=unnamedplus
+  map <C-c> "+y<CR>           " CTRL+C   to copy in Vmode
 " Set tab width and convert tabs to spaces
   set tabstop=2
   set softtabstop=2
@@ -60,11 +57,11 @@
   set ignorecase
   set smartcase
 
-  set autoindent        " indent
-  " set showmatch         " highlight matching brackets
-  set autoread          " when file was changed
-  set lazyredraw        " redraw only when we need to"
-  set hlsearch          " highlight same words while searching with Shift + *
+  set autoindent              " indent
+  " set showmatch             " highlight matching brackets
+  set autoread                " when file was changed
+  set lazyredraw              " redraw only when we need to"
+  set hlsearch                " highlight same words while searching with Shift + *
   "Ability to cancel a search with Escape (marcgg.com)
   nnoremap <silent> <Esc> :nohlsearch<Bar>:echo<CR>
 
@@ -106,6 +103,7 @@ call plug#begin('~/.config/nvim/plugged')
   Plug 'vim-airline/vim-airline-themes'
 " Plug 'itchyny/lightline.vim'
   Plug 'rakr/vim-one'
+  Plug 'morhetz/gruvbox'
 
 " Project - Navigation - Files
   Plug 'ctrlpvim/ctrlp.vim', { 'on': 'CtrlP' }
@@ -116,19 +114,18 @@ call plug#begin('~/.config/nvim/plugged')
   Plug 'mileszs/ack.vim'
 
 " Code help
-  " Plug 'Valloric/YouCompleteMe'
-  Plug 'tpope/vim-repeat'                                 " repeat more commands with '.'
-  Plug 'terryma/vim-multiple-cursors'                     " multiple cursors like in ST
+  Plug 'tpope/vim-repeat'                 " repeat more commands with '.'
+  Plug 'terryma/vim-multiple-cursors'     " multiple cursors like in ST
 
   " Plug 'Shougo/deoplete.nvim', { 'on': [], 'do': ':UpdateRemotePlugins', 'tag': 'e28d519' } " autocomplete, use e28d519 because of https://github.com/Shougo/deoplete.nvim/issues/291
   " Plug 'zchee/deoplete-clang'
 
-  Plug 'Raimondi/delimitMate', { 'on': [] }               " closing brackets
-  Plug 'terryma/vim-expand-region'                        " change visual selection by using '+' / '-'
-  Plug 'mbbill/undotree'                                  " undo history tree
-  Plug 'Yggdroot/indentLine'                              " indent columns
-  Plug 'tpope/vim-surround'                               " better brackets
-  Plug 'scrooloose/syntastic'                             " check syntax
+  Plug 'Raimondi/delimitMate', { 'on': [] }   " closing brackets
+  Plug 'terryma/vim-expand-region'            " change visual selection by using '+' / '-'
+  Plug 'mbbill/undotree'                      " undo history tree
+  Plug 'Yggdroot/indentLine'                  " indent columns
+  Plug 'tpope/vim-surround'                   " better brackets
+  Plug 'scrooloose/syntastic'                 " check syntax
   Plug 'matze/vim-move'
   Plug 'majutsushi/tagbar'
 
@@ -152,12 +149,13 @@ call plug#begin('~/.config/nvim/plugged')
   Plug 'tmux-plugins/vim-tmux-focus-events'
 
 " git
-  Plug 'tpope/vim-fugitive'                               " git commands
-  Plug 'airblade/vim-gitgutter'                           " git gutter
+  Plug 'tpope/vim-fugitive'                   " git commands
+  Plug 'airblade/vim-gitgutter'               " git gutter
 
 call plug#end()
 
 "  ========================= Configuration ========================= 
+"
 "
 " Unite
   let g:unite_force_overwrite_statusline = 0
@@ -199,8 +197,10 @@ call plug#end()
 " Copy all
   nnoremap <leader>y ggVGy<CR>
 
-" Colorscheme
+" Colorschem
   "colorscheme base16-harmonic-dark
+
+  colorscheme gruvbox
 
 " Indent  line
   let g:indentLine_enabled = 1
@@ -208,7 +208,7 @@ call plug#end()
   
 " What  is this code below? 
   set laststatus=2
-  set noshowmode " remove extra default info from nvim
+  set noshowmode              " remove extra default info from nvim
 
 " " --- CtrlP -----------------------------
 "
@@ -312,7 +312,7 @@ call plug#end()
 
 " --- Airline ---------------------------
 "
-  let g:airline_theme='luna'
+  let g:airline_theme='one'
   let g:airline#extensions#tabline#enabled = 1
   let g:airline_powerline_fonts = 1
 
@@ -330,3 +330,6 @@ call plug#end()
   let g:UltiSnipsExpandTrigger = "<tab>"
   let g:UltiSnipsJumpForwardTrigger = "<tab>"
   let g:UltiSnipsJumpBackwardTrigger = "<s-tab>"
+
+" make sure this is the last line
+  filetype plugin indent on
