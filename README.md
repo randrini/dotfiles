@@ -1,12 +1,15 @@
 # dotfiles
 This is my experimental dotfiles.
 
+Clone repo at ~
+
 bash init.sh
 
 sudo zsh zim_init.sh
 
 open nvim => :PlugInstall
 
-log out log in
+relog
 
+-----
 for tmux C-a + I
