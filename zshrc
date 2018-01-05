@@ -4,6 +4,16 @@
 # User configuration sourced by interactive shells
 #
 
+# Change default zim location
+export ZIM_HOME=${ZDOTDIR:-${HOME}}/.zim
+
+# Start zim
+[[ -s ${ZIM_HOME}/init.zsh ]] && source ${ZIM_HOME}/init.zsh
+
+#
+# User configuration sourced by interactive shells
+#
+
 # Source zim
 if [[ -s ${ZDOTDIR:-${HOME}}/.zim/init.zsh ]]; then
   source ${ZDOTDIR:-${HOME}}/.zim/init.zsh
@@ -27,7 +37,7 @@ fi
 #colors
 autoload -Uz promptinit
 promptinit
-prompt steeef
+prompt eriner 
 
 if [ -e /usr/share/terminfo/x/xterm-256color ]; then
         export TERM='xterm-256color'

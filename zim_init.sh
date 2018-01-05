@@ -1,6 +1,6 @@
 #!/usr/bin/zsh
 rm -rf ~/.zim
-git clone --recursive https://github.com/Eriner/zim.git ${ZDOTDIR:-${HOME}}/.zim
+git clone --recursive https://github.com/zimfw/zimfw.git ${ZDOTDIR:-${HOME}}/.zim
 
 setopt EXTENDED_GLOB
 for template_file ( ${ZDOTDIR:-${HOME}}/.zim/templates/* ); do
@@ -10,4 +10,5 @@ for template_file ( ${ZDOTDIR:-${HOME}}/.zim/templates/* ); do
 done
 
 # chsh -s =zsh
+
 source ${ZDOTDIR:-${HOME}}/.zlogin
