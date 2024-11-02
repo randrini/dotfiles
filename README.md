@@ -1,20 +1,17 @@
-# dotfiles
-This is my experimental dotfiles.
+#### Dotfiles Setup
 
+This is my experimental dotfiles. 
 
+Clone the repository at `~` 
 
+Then run `bash init.sh` 
 
-Clone repo at ~
+Followed by `sudo zsh zim_init.sh` 
 
-bash init.sh
+Open Neovim with `nvim` 
 
-sudo zsh zim_init.sh
+Execute `:PlugInstall` to install plugins 
 
-open nvim => :PlugInstall
+After that, relog the session using `relog` 
 
-relog session
-
-relog
-
------
-for tmux C-a + I
+For tmux, press `C-a + I` to install plugins
